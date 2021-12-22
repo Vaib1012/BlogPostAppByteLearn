@@ -20,10 +20,12 @@ var posts=[
          "likes":"56",
         "title":"Dummy blog 1",
          "category":"science",
-         "imgLink":"https://images.pexels.com/photos/1456268/pexels-photo-1456268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+         "imgLink":"https://cdn.pixabay.com/photo/2011/12/14/12/21/orion-nebula-11107__480.jpg",
          "content":"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eget velit tristique, sollicitudin leo viverra, suscipit neque. Aliquam ut facilisis urna, in pretium nibh. Morbi in leo in eros commodo volutpat ac sed dolor." 
     }
 ];
+
+var editId=-1;
 
 function displayModal(){
     document.getElementById("addPostModal").style.display="block";
@@ -59,50 +61,38 @@ function clearAllFields(){
 
 function AddCard(){
     var i=posts.length-1;
-
-    var cardHtml="<div id=\"card-"+posts[i]['blogId']+"\">"+
-        "<div class=\"card d-flex position-relative flex-column\">"+
-            "<div class='imgContainer'> <img src='"+posts[i]['imgLink']+"'> </div>"+ 
-            "<div class=\"content\">"+
-                " <h2>"+posts[i]['title']+"</h2>"+
-                " <h7 class=\"blogId\">Blog ID: "+posts[i]['blogId']+"</h7>"+
-                " <h7>Category: "+posts[i]['category']+" likes: "+posts[i]['likes']+"</h7>"+
-                    "<p>"+posts[i]['content']+"</p>"+
-            "</div>"+
-        "</div>"+
-        "<div class=\"btnContainer\">"+
-            "<button type=\"button\" class=\"btn btn-danger\" onclick=\"deleteBlog("+posts[i]['blogId']+")\">Delete</button>"+
-            "<button type=\"button\" class=\"btn btn-info\" style=\" margin: 5px\" onclick=\"likeBlog("+posts[i]['blogId']+")\">Like</button>"+
-        "</div>"+
-    "</div>";
-
+    var cardHtml = getCardHtml(i);
     var element = document.getElementById("blogCards")
     element.innerHTML = element.innerHTML + cardHtml;
 }
 
 function loadCards(){
+    var element = document.getElementById("blogCards")
     for(var i=0;i<posts.length;i++){
-       
-        var cardHtml= "<div id=\"card-"+posts[i]['blogId']+"\">"+
-            "<div class=\"card d-flex position-relative flex-column\">"+
-                "<div class='imgContainer'> <img src='"+posts[i]['imgLink']+"'> </div>"+ 
-                "<div class=\"content\">"+
-                    " <h2>"+posts[i]['title']+"</h2>"+
-                    " <h7 id=\"txtLikes-"+posts[i]['blogId']+"\"> likes: "+posts[i]['likes']+"</h7>"+
-                    " <h7>Category: "+posts[i]['category']+"\tBlog ID: "+posts[i]['blogId']+"</h7>"+
-                        "<p>"+posts[i]['content']+"</p>"+
-                "</div>"+
-            "</div>"+
-            "<div class=\"btnContainer\">"+
-                "<button type=\"button\" class=\"btn btn-danger\" onclick=\"deleteBlog("+posts[i]['blogId']+")\">Delete</button>"+
-                "<button type=\"button\" class=\"btn btn-info\" style=\" margin: 5px\" onclick=\"likeBlog("+posts[i]['blogId']+")\">Like</button>"+
-                "<button type=\"button\" class=\"btn btn-warning\" style=\" margin: 5px\" onclick=\"editBlog("+posts[i]['blogId']+")\">Edit Blog</button>"+
-            "</div>"+
-        "</div>";
-
-        var element = document.getElementById("blogCards")
+       var cardHtml = getCardHtml(i);
         element.innerHTML = element.innerHTML + cardHtml;
     }
+}
+
+function getCardHtml(i){
+    var element =  "<div id=\"card-"+posts[i]['blogId']+"\">"+
+    "<div class=\"card d-flex position-relative flex-column\">"+
+            "<div class='imgContainer'> <img src='"+posts[i]['imgLink']+"'> </div>"+ 
+            "<div class=\"content\">"+
+                " <h2>"+posts[i]['title']+"</h2>"+
+                " <h7 id=\"txtLikes-"+posts[i]['blogId']+"\"> likes: "+posts[i]['likes']+"</h7>"+
+                " <h7>Category: "+posts[i]['category']+"\tBlog ID: "+posts[i]['blogId']+"</h7>"+
+                    "<p>"+posts[i]['content']+"</p>"+
+            "</div>"+
+        "</div>"+
+        "<div class=\"btnContainer\" style =\"width:fit-content;\">"+
+            "<button type=\"button\" class=\"btn btn-danger\" onclick=\"deleteBlog("+posts[i]['blogId']+")\">Delete</button>"+
+            "<button type=\"button\" class=\"btn btn-info\" style=\" margin: 5px\" onclick=\"likeBlog("+posts[i]['blogId']+")\">Like</button>"+
+            "<button type=\"button\" class=\"btn btn-warning\" style=\" margin: 5px\" onclick=\"editBlog("+posts[i]['blogId']+")\">Edit</button>"+
+        "</div>"+
+    "</div>";
+
+    return element;
 }
 
 function deleteBlog(id){
@@ -119,10 +109,10 @@ function deleteBlog(id){
 function likeBlog(id){
     for(var i =0;i<posts.length;i++){
         
-        if(posts[i]['blogId'] == id){                
-                posts[i]["likes"] = parseInt(posts[i]["likes"]) +1 ;
-                document.getElementById("txtLikes-"+id).innerHTML = "likes: "+posts[i]["likes"];
-                break;
+        if(posts[i]['blogId'] == id){               
+            posts[i]["likes"] = parseInt(posts[i]["likes"]) +1 ;
+            document.getElementById("txtLikes-"+id).innerHTML = "likes: "+posts[i]["likes"];
+            break;
             
         }
     }
@@ -130,6 +120,52 @@ function likeBlog(id){
 
 
 function editBlog(id){
-    document.getElementById("editPostModal").style.display="block";
+    
+    var i;
+    editId=id;
+    for( i =0;i<posts.lengthl;i++){
+        if(posts[i]['blogId'] == id){
+            break;
+        }
+    }
+    if(i >= 0){
+        document.getElementById("editPostModal").style.display="block";
+
+        document.getElementById("eblogTitle").value=posts[i]['title'];
+        document.getElementById("eblogCategory").value=posts[i]['category'];
+        document.getElementById("eblockImageLink").value=posts[i]['imgLink'];
+        document.getElementById("eblogContent").value=posts[i]['content'];
+        
+    }
 }
 
+
+function closeEditModal(){
+    document.getElementById("eblogTitle").value="";
+    document.getElementById("eblogCategory").value="";
+    document.getElementById("eblockImageLink").value="";
+    document.getElementById("eblogContent").value="";
+    document.getElementById("editPostModal").style.display="none";
+
+}
+
+function saveBlog(){
+    for( i =0;i<posts.lengthl;i++){
+        if(posts[i]['blogId'] == editId){
+            editId=-1;
+            break;
+        }
+    }
+    posts[i]['title'] = document.getElementById("eblogTitle").value;
+    posts[i]['category'] = document.getElementById("eblogCategory").value;
+    posts[i]['imgLink'] = document.getElementById("eblockImageLink").value;
+    posts[i]['content'] = document.getElementById("eblogContent").value;
+
+    
+    document.getElementById("blogCards").innerHTML="";
+    loadCards();
+
+    closeEditModal();
+
+   
+}
