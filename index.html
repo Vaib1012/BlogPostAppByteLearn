@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Blog Post</title>
+        <link rel="stylesheet" href="indexStyle.css">
+        <meta charset="utf-8">       
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bootstrap Navbar with Dropdown</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="indexScript.js"></script>
+    </head>
+<body onload="loadCards()">
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container-fluid">
+            <a href="#" class="navbar-brand">Brand</a>
+            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                <div class="navbar-nav">
+                    <a href="#" class="nav-item nav-link active">Home</a>
+                    <a href="#" class="nav-item nav-link">Profile</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Messages</a>
+                        <div class="dropdown-menu">
+                            <a href="#" class="dropdown-item">Inbox</a>
+                            <a href="#" class="dropdown-item">Sent</a>
+                            <a href="#" class="dropdown-item">Drafts</a>
+                        </div>
+                    </div>
+                </div>
+                <form class="d-flex">
+                    <div class="input-group">                    
+                        <input type="text" class="form-control" placeholder="Search">
+                        <button type="button" class="btn btn-secondary"><i class="bi-search"></i></button>
+                    </div>
+                </form>
+                <div class="navbar-nav">
+                    <a href="#" class="nav-item nav-link">Login</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="btnContainer">
+        <button id="addBtn" type="button" class="btn btn-success" style="width: 100%;" onclick="displayModal()">Add New Post</button>
+    </div>
+
+
+    <div id="blogCards" class="container d-flex align-items-center justify-content-center position-relative flex-wrap" style="margin-top:3%">
+        <!-- <div class="card d-flex position-relative flex-column">
+            <div class='imgContainer'> <img src='https://images.pexels.com/photos/1456268/pexels-photo-1456268.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'> </div>
+            <div class="content">
+                <h2>Card One</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eget velit tristique, sollicitudin leo viverra, suscipit neque. Aliquam ut facilisis urna, in pretium nibh. Morbi in leo in eros commodo volutpat ac sed dolor.</p>
+            </div>
+        </div> -->
+        <!-- <div class="card d-flex position-relative flex-column">
+            <div class='imgContainer'> <img src='https://images.pexels.com/photos/196667/pexels-photo-196667.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'> </div>
+            <div class="content">
+                <h2>Card Two</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eget velit tristique, sollicitudin leo viverra, suscipit neque. Aliquam ut facilisis urna, in pretium nibh. Morbi in leo in eros commodo volutpat ac sed dolor.</p>
+            </div>
+        </div>
+        <div class="card d-flex position-relative flex-column">
+            <div class='imgContainer'> <img src='https://images.pexels.com/photos/847483/pexels-photo-847483.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'> </div>
+            <div class="content">
+                <h2>Card Three</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eget velit tristique, sollicitudin leo viverra, suscipit neque. Aliquam ut facilisis urna, in pretium nibh. Morbi in leo in eros commodo volutpat ac sed dolor.</p>
+            </div>
+        </div> -->
+    </div>
+
+    <div id="addPostModal" class="modal" tabindex="-1" style="display:none">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Modal title</h5>
+              <button
+                type="button"
+                class="btn-close"
+                data-mdb-dismiss="modal"
+                aria-label="Close" onclick="closeModal()"
+              ></button>
+            </div>
+            <div class="modal-body">
+                <form> 
+                    <div>
+                        <label for="blogTitle">Title </label> <br/>  
+                        <input id="blogTitle" type="text"  name="title" style="width: 100%;"/> <br/>  
+                    </div> 
+                    <label for="blogCategory">Categories </label><br/>
+                    <input id="blogCategory" type="text" id="category" name="category" style="width: 100%;"/> <br/>
+                    <label for="blockImageLink">Image Link </label><br/>
+                    <input id="blockImageLink" type="text" name="category" style="width: 100%;"/> <br/>
+                
+                     Content<br>  
+                      <textarea id="blogContent" style="width: 100%;height: 200px"></textarea>    
+                 </form>
+                
+                <!-- <button class="button submit">Submit</button>
+                <button class="button cancel">Cancel</button> -->
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-mdb-dismiss="modal" onclick="closeModal()">
+                Close
+              </button>
+              <button type="button" class="btn btn-primary" onclick="addPost()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+
+</body>
+</html>
