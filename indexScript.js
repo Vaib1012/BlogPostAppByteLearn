@@ -60,14 +60,20 @@ function clearAllFields(){
 function AddCard(){
     var i=posts.length-1;
 
-    var cardHtml= "<div id=\""+posts[i]['blogId']+"\" class=\"card d-flex position-relative flex-column\">"+
-    "<div class='imgContainer'> <img src='"+posts[i]['imgLink']+"'> </div>"+
-    "<div class=\"content\">"+
-    " <h2>"+posts[i]['title']+"</h2>"+
-    " <h7 class=\"blogId\">Blog ID: "+posts[i]['blogId']+"</h7>"+
-    " <h7>Category: "+posts[i]['category']+" likes: "+posts[i]['likes']+"</h7>"+
-        "<p>"+posts[i]['content']+"</p>"+
-    "</div>"+
+    var cardHtml="<div id=\"card-"+posts[i]['blogId']+"\">"+
+        "<div class=\"card d-flex position-relative flex-column\">"+
+            "<div class='imgContainer'> <img src='"+posts[i]['imgLink']+"'> </div>"+ 
+            "<div class=\"content\">"+
+                " <h2>"+posts[i]['title']+"</h2>"+
+                " <h7 class=\"blogId\">Blog ID: "+posts[i]['blogId']+"</h7>"+
+                " <h7>Category: "+posts[i]['category']+" likes: "+posts[i]['likes']+"</h7>"+
+                    "<p>"+posts[i]['content']+"</p>"+
+            "</div>"+
+        "</div>"+
+        "<div class=\"btnContainer\">"+
+            "<button type=\"button\" class=\"btn btn-danger\" onclick=\"deleteBlog("+posts[i]['blogId']+")\">Delete</button>"+
+            "<button type=\"button\" class=\"btn btn-info\" style=\" margin: 5px\" onclick=\"likeBlog("+posts[i]['blogId']+")\">Like</button>"+
+        "</div>"+
     "</div>";
 
     var element = document.getElementById("blogCards")
@@ -77,15 +83,21 @@ function AddCard(){
 function loadCards(){
     for(var i=0;i<posts.length;i++){
        
-        var cardHtml= "<div id=\""+posts[i]['blogId']+"\" class=\"card d-flex position-relative flex-column\">"+
-        
-        "<div class='imgContainer'> <img src='"+posts[i]['imgLink']+"'> </div>"+   
-        "<div class=\"content\">"+
-        " <h2>"+posts[i]['title']+"</h2>"+
-        " <h7 class=\"blogId\">Blog ID: "+posts[i]['blogId']+"</h7>"+
-        " <h7>Category: "+posts[i]['category']+" likes: "+posts[i]['likes']+"</h7>"+
-            "<p>"+posts[i]['content']+"</p>"+
-        "</div>"+
+        var cardHtml= "<div id=\"card-"+posts[i]['blogId']+"\">"+
+            "<div class=\"card d-flex position-relative flex-column\">"+
+                "<div class='imgContainer'> <img src='"+posts[i]['imgLink']+"'> </div>"+ 
+                "<div class=\"content\">"+
+                    " <h2>"+posts[i]['title']+"</h2>"+
+                    " <h7 id=\"txtLikes-"+posts[i]['blogId']+"\"> likes: "+posts[i]['likes']+"</h7>"+
+                    " <h7>Category: "+posts[i]['category']+"\tBlog ID: "+posts[i]['blogId']+"</h7>"+
+                        "<p>"+posts[i]['content']+"</p>"+
+                "</div>"+
+            "</div>"+
+            "<div class=\"btnContainer\">"+
+                "<button type=\"button\" class=\"btn btn-danger\" onclick=\"deleteBlog("+posts[i]['blogId']+")\">Delete</button>"+
+                "<button type=\"button\" class=\"btn btn-info\" style=\" margin: 5px\" onclick=\"likeBlog("+posts[i]['blogId']+")\">Like</button>"+
+                "<button type=\"button\" class=\"btn btn-warning\" style=\" margin: 5px\" onclick=\"editBlog("+posts[i]['blogId']+")\">Edit Blog</button>"+
+            "</div>"+
         "</div>";
 
         var element = document.getElementById("blogCards")
@@ -93,9 +105,31 @@ function loadCards(){
     }
 }
 
-function deleteBlog(){
-    var myobj = document.getElementById("demo");
+function deleteBlog(id){
+    //console.log("id:"+id);
+    var myobj = document.getElementById("card-"+id)
     myobj.remove();
+    for(var i =0;i<posts.lengthl;i++){
+
+        if(posts[i]['blogId'] == id)
+            list.splice(i, 1); 
+    }
 }
 
+function likeBlog(id){
+    for(var i =0;i<posts.length;i++){
+        
+        if(posts[i]['blogId'] == id){                
+                posts[i]["likes"] = parseInt(posts[i]["likes"]) +1 ;
+                document.getElementById("txtLikes-"+id).innerHTML = "likes: "+posts[i]["likes"];
+                break;
+            
+        }
+    }
+}
+
+
+function editBlog(id){
+    document.getElementById("editPostModal").style.display="block";
+}
 
